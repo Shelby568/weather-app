@@ -1,0 +1,32 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import ForecastSummary from '../../components/forecast-summary';
+
+describe('ForecastSummary', () => {
+    it('renders correctly', () => {
+        const { asFragment } = render(
+            <ForecastSummary
+            date={123456}
+            temperature="mockTemperature"
+            description="mockDescription"
+            icon="200"
+            />
+        );
+        expect(asFragment).toMatchSnapshot();
+    });
+
+    it('renders to the correct props', () => {
+        const { getByText } = render(
+            <ForecastSummary
+            date={123456}
+            temperature="mockTemperature"
+            description="mockDescription"
+            icon="200"
+            />
+        );
+        expect(getByText("Thu 1st Jan")).toHaveClass("date");
+        expect(getByText("mockTemperature")).toHaveClass("temperature");
+        expect(getByText("mockDescription")).toHaveClass("description");
+        //expect(getByAltText(<i />)).toHaveClass("wi wi-day-storm-showers");
+    });
+});
