@@ -1,30 +1,8 @@
 import React from 'react';
-import { cleanup, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import ForecastSummaries from '../../components/forecast-summaries';
-import ForecastSummary from '../../components/forecast-summary';
 
-const forecasts = [
-    {
-        date: 123,
-        description: "date1",
-        icon: "200",
-        temperature: {
-            max: 999,
-        },
-    },
-    {
-        date: 456,
-        description: "date2",
-        icon: "200",
-        temperature: {
-            max: 777,
-        },
-    },
-];
-
-afterEach(cleanup);
-
-describe('ForecasetSummaries', () => {
+describe('ForecastSummaries', () => {
     const forecasts = [
         {
             date: 123,
@@ -46,7 +24,7 @@ describe('ForecasetSummaries', () => {
 
     it('renders correctly to match ForecastSummaries snapshot', () => {
         const { asFragment } = render(<ForecastSummaries forecasts={forecasts} />);
-        expect(asFragment).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
     
     it('renders to the correct amount of ForecastSummary component props', () => {

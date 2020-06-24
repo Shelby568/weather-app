@@ -8,7 +8,7 @@ const ForecastSummary = props => {
     return (
       <>
         <div className="date" data-testid="date-id">
-        <span>{moment(props.date).format('ddd Do MMM')}</span>
+        <span className="date">{moment(props.date).format('ddd Do MMM')}</span>
         </div>
         <div className="temperature" data-testid="temperature-id">
           <span>{props.temperature}&deg;c</span>

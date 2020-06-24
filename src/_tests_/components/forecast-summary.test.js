@@ -12,11 +12,11 @@ describe('ForecastSummary', () => {
             icon="200"
             />
         );
-        expect(asFragment).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('renders to the correct props', () => {
-        const { getByText } = render(
+        const { getByText, getByTestId } = render(
             <ForecastSummary
             date={123456}
             temperature="mockTemperature"
@@ -25,8 +25,8 @@ describe('ForecastSummary', () => {
             />
         );
         expect(getByText("Thu 1st Jan")).toHaveClass("date");
-        expect(getByText("mockTemperature")).toHaveClass("temperature");
+        expect(getByTestId("temperature-id")).toHaveClass("temperature");
         expect(getByText("mockDescription")).toHaveClass("description");
-        //expect(getByAltText(<i />)).toHaveClass("wi wi-day-storm-showers");
+        expect(getByTestId("icon-id")).toHaveClass("icon");
     });
 });
