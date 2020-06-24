@@ -1,41 +1,77 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react'
 import LocationDetails from './location-details';
 import ForecastSummaries from './forecast-summaries';
 import ForecastDetails from './forecast-details';
 import '../styles/app.css';
+import axios from 'axios';
+import SearchForm from './search-form';
 
 const App = props => {
-    const [selectedDate, setSelectedDate] = useState(props.forecasts[0].date);
+    const [selectedDate, setSelectedDate] = useState(0);
+    const [forecasts, setForecasts] = useState([]);
+    const [location, setLocation] = useState({
+        city: '',
+        country: '',
+    })
 
-    const selectedForecast = props.forecasts.find(forecast => forecast.date === selectedDate);
-  
+    useEffect(() => {
+      axios.get('https://mcr-codes-weather.herokuapp.com/forecast')
+      .then(response => {
+        setForecasts(response.data.forecasts);
+        setLocation(response.data.location);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data)
+          console.log(error.response.status)
+        } else if (error.request) {
+          console.log(error.request)
+        } else {
+          console.log(error.message)
+        }
+      })
+       
+    });
+
+    const handleLocationSearch = (city) => {
+      const request = city.toLowerCase();
+
+      axios.get(`https://mcr-codes-weather.herokuapp.com/forecast?city=${request}`)
+      .then((response) => {
+        setForecasts(response.data.forecast);
+        setLocation(response.data.location);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data)
+          console.log(error.response.status)
+        } else if (error.request) {
+          console.log(error.request)
+        } else {
+          console.log(error.message)
+        }
+      })
+    };
+
+    const selectedForecast = forecasts.find(forecast => forecast.date === selectedDate);
+    
     const handleForecastSelect = (date) => {
         setSelectedDate(date);
     };
-
+    
       return (
         <div className="forecast">
         <LocationDetails
-          city={props.location.city}
-          country={props.location.country}
+          city={location.city}
+          country={location.country}
         />
-        <ForecastSummaries forecasts={props.forecasts} onForecastSelect={props.handleForecastSelect} />
-        <ForecastDetails forecast={props.forecasts[0]} />
+        <SearchForm setLocationSearch={handleLocationSearch} />
+        <ForecastSummaries forecasts={forecasts} onForecastSelect={handleForecastSelect} />
+        
+        {selectedForecast && (<ForecastDetails forecast={selectedForecast} />)
+        }
         /</div>
       );
   };
-
-App.propTypes = {
-    location: PropTypes.shape({
-        city: PropTypes.string,
-        country: PropTypes.string,
-    }).isRequired,
-    forecasts: PropTypes.shape({
-        forecasts: PropTypes.array,
-        temperature: PropTypes.number,
-        description: PropTypes.string,
-    }).isRequired,
-};
 
 export default App;
