@@ -2,20 +2,3 @@
     display: flex;
     justify-content: space-evenly;
 }
-
-.date {
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 25px;
-    margin-top: 40px;
-
-}
-
-.temperature {
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 1500px;
-    margin-right: 75px;
-
-
-}
