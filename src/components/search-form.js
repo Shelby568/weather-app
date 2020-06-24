@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/search-form.css';
 
 const SearchForm = props => {
 
@@ -12,7 +13,7 @@ const SearchForm = props => {
     return (
         <form className="searchform">
             <input type="text" value={searchText} onChange={handleInputChange} />
-            <button onClick={() => props.setLocationSearch(searchText)}>Search</button>
+            <button className="searchbutton" onClick={() => props.setLocationSearch(searchText)}>Search</button>
         </form>
     )
 }

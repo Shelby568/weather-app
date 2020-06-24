@@ -6,3 +6,16 @@
     padding: 100px;   
     font-size: 1.5rem;
 }
+
+.button {
+    background-color: white;
+    color: black;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 2px solid white;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color:#ADD8E6;  
+}
