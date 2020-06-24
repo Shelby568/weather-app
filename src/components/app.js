@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import LocationDetails from './location-details';
 import ForecastSummaries from './forecast-summaries';
 import ForecastDetails from './forecast-details';
@@ -9,12 +9,11 @@ import SearchForm from './search-form';
 const App = props => {
     const [selectedDate, setSelectedDate] = useState(0);
     const [forecasts, setForecasts] = useState([]);
-    const [location, setLocation] = useState({
-        city: '',
-        country: '',
-    })
+    const [location, setLocation] = useState({city: '', country: ''})
 
     useEffect(() => {
+
+      if (forecasts.length===0) {
       axios.get('https://mcr-codes-weather.herokuapp.com/forecast')
       .then(response => {
         setForecasts(response.data.forecasts);
@@ -22,31 +21,31 @@ const App = props => {
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data)
-          console.log(error.response.status)
+          alert('This location does not exist')
         } else if (error.request) {
-          console.log(error.request)
+          alert('Oops something went wrong')
         } else {
           console.log(error.message)
         }
       })
-       
+    }
     });
 
-    const handleLocationSearch = (city) => {
+    const handleLocationSearch = (event, city) => {
+      event.preventDefault()
+
       const request = city.toLowerCase();
 
       axios.get(`https://mcr-codes-weather.herokuapp.com/forecast?city=${request}`)
       .then((response) => {
-        setForecasts(response.data.forecast);
+        setForecasts(response.data.forecasts);
         setLocation(response.data.location);
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data)
-          console.log(error.response.status)
+          alert('This location does not exist')
         } else if (error.request) {
-          console.log(error.request)
+          alert('Oops something went wrong')
         } else {
           console.log(error.message)
         }
@@ -68,8 +67,8 @@ const App = props => {
         <SearchForm setLocationSearch={handleLocationSearch} />
         <ForecastSummaries forecasts={forecasts} onForecastSelect={handleForecastSelect} />
         
-        {selectedForecast && (<ForecastDetails forecast={selectedForecast} />)
-        }
+        {selectedForecast && (<ForecastDetails forecast={selectedForecast} />)}
+
         /</div>
       );
   };

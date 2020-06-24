@@ -13,13 +13,13 @@ const SearchForm = props => {
     return (
         <form className="searchform">
             <input type="text" value={searchText} onChange={handleInputChange} />
-            <button className="searchbutton" onClick={() => props.setLocationSearch(searchText)}>Search</button>
+            <button className="searchbutton" onClick={(event) => props.setLocationSearch(event, searchText)}>Search</button>
         </form>
     )
 }
 
 SearchForm.propTypes = {
-    setLocationSearch: PropTypes.func,
+    setLocationSearch: PropTypes.func.isRequired,
 }
 
 export default SearchForm;
