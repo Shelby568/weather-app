@@ -12,7 +12,7 @@ const SearchForm = props => {
     
     return (
         <form className="searchform">
-            <input type="text" value={searchText} onChange={handleInputChange} />
+            <input type="text" value={searchText} onChange={handleInputChange} placeholder="Search for location.." />
             <button className="searchbutton" onClick={(event) => props.setLocationSearch(event, searchText)}>Search</button>
         </form>
     )

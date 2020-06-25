@@ -34,8 +34,8 @@ const App = props => {
     const handleLocationSearch = (event, city) => {
       event.preventDefault()
 
-      const request = city.toLowerCase();
-
+      const request = city
+    
       axios.get(`https://mcr-codes-weather.herokuapp.com/forecast?city=${request}`)
       .then((response) => {
         setForecasts(response.data.forecasts);
@@ -69,7 +69,7 @@ const App = props => {
         
         {selectedForecast && (<ForecastDetails forecast={selectedForecast} />)}
 
-        /</div>
+        </div>
       );
   };
 
